@@ -1,0 +1,49 @@
+1. gra dwóch graczy
+2. trzeci gracz nie może dołączyć
+3. gdy jeden z graczy opuści grę (poprzez przycisk lub zamknięcie strony), drugi dostaje powiadomienie i też zostaje wyrzucony z gry
+4. odświeżenie strony powoduje zakończenie gry u obu graczy (j.w.) ale gracz, który odświeżył od razu zaczyna nową sesję
+
+Stan początkowy: brak graczy
+1. Gracz dołącza (on connection)
+2. Zostaje przydzielony kółko lub krzyżyk (on connection)
+3. Dołącza kolejny gracz - zostaje przydzielone pozostałe z kołko i krzyżyk (on connection)
+4. Dołącza kolejny gracz - zostaje odrzucony (on connection)
+
+
+todo:
+1. nie można zacząć gry jeśli nie ma dwóch graczy
+2. zacząć może tylko kółko, a nie ktokolwiek kto kliknie
+
+
+
+
+
+
+
+Funkcja joinOrReject:
+- za currentClient zostanie podłożony pierwszy podany argument a nie drugi (nie trzeba podawać argumentu wss.clients)
+- nie ma właściwości length w wss.clients (jest za to size)
+
+Funkcja assignXOrO:
+- do playerChar przypisze undefined,
+- 
+
+
+
+
+
+
+
+terminate rozłącza z websocket
+samo słowo return zwraca undefined z funkcji
+
+
+
+
+serwer odsyła zaktualizowaną plansze
+
+validateMove zwróci true w przypadku "dobrego kodu" (whatClicked = X)
+validateMove zwróci false w przypadku "złego kodu" (whatClicked = undefined)
+
+
+currentClient.send(JSON.stringify(boardState));

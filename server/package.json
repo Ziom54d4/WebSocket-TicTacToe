@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "ip": "^1.1.8",
+    "ws": "^8.13.0"
+  }
+}
