@@ -3,6 +3,7 @@ const table = document.querySelector("table");
 const tdElements = [...document.querySelectorAll("td")];
 
 let char = undefined;
+let enemyChar = undefined;
 let ws = undefined;
 
 btnPlay.addEventListener("click", () => {
@@ -17,8 +18,10 @@ btnPlay.addEventListener("click", () => {
     const parsedData = JSON.parse(data.data);
 
     char = parsedData.data.char;
-    boardState = parsedData.data;
 
+    /*
+    boardState = parsedData.data;
+    
     for (let i = 0; i < boardState.length; i++) {
       for (let j = 0; j < boardState[0].length; j++) {
         if (boardState[i][j] != null) {
@@ -28,7 +31,38 @@ btnPlay.addEventListener("click", () => {
               td.getAttribute("data-x") == i &&
               td.getAttribute("data-y") == j
             ) {
+              let positionX = td.getAttribute("data-x");
+              let positionY = td.getAttribute("data-y");
+              let position = {
+                messageType: messageTypes.ClientSaysLastMove,
+                data: {
+                  positionX,
+                  positionY,
+                  whatClicked: "X",
+                },
+              };
+              ws.send(JSON.stringify(position));
               td.innerText = char;
+            }
+          });
+        }
+      }
+    }
+    */
+
+    const updatedBoard = parsedData.data;
+
+    for (let i = 0; i < updatedBoard.length; i++) {
+      for (let j = 0; j < updatedBoard[0].length; j++) {
+        if (updatedBoard[i][j] != null) {
+          enemyChar = updatedBoard[i][j];
+          console.log(char);
+          tdElements.forEach((td) => {
+            if (
+              td.getAttribute("data-x") == i &&
+              td.getAttribute("data-y") == j
+            ) {
+              td.innerText = enemyChar;
             }
           });
         }
@@ -36,6 +70,7 @@ btnPlay.addEventListener("click", () => {
     }
 
     console.log(parsedData);
+    console.log(parsedData.data);
     console.log(char); // char robi się undefined u drugiej osoby po pierwszym kliknięciu pierwszej osoby w którąkolwiek komórkę planszy. Wynika to z tego że obiekt data podany jako parametr zmienia się na inny obiekt za każdym razem
   });
 });
@@ -61,7 +96,7 @@ tdElements.forEach((td) =>
     console.log(positionY);
     ev.target.innerText = char; // stawiamy X w pole które klikneliśmy
     console.log(boardState);
-    ws.send(JSON.stringify(position));
+    ws.send(JSON.stringify(position)); // tutaj leci do serwera po pierwszym kliknięciu
   })
 );
 
