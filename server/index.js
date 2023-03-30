@@ -32,7 +32,7 @@ wss.on("connection", (client) => {
   client.on("message", (data) => {
     const parsedData = JSON.parse(data);
     console.log(parsedData);
-    verifyWhatReceivedAndSentProperResponse(client, parsedData); // 5
+    verifyWhatReceivedAndSentProperResponse(client, parsedData);
   });
 
   client.on("close", () => {
@@ -49,18 +49,18 @@ const joinOrReject = (currentClient) => {
     currentClient.terminate();
     return;
   }
-  assignXOrO(currentClient); // 2
+  assignXOrO(currentClient);
 };
 
 const assignXOrO = (currentClient) => {
-  const playerChar = getPlayerChar(); // 3 X
-  currentClient.char = playerChar; // X
+  const playerChar = getPlayerChar();
+  currentClient.char = playerChar;
   sendToSender(currentClient, {
-    messageType: messageTypes.ServerSaysAssignPlayerChar, // zero
+    messageType: messageTypes.ServerSaysAssignPlayerChar,
     data: {
-      char: playerChar, // X
+      char: playerChar,
     },
-  }); // 4
+  });
 };
 
 const getPlayerChar = () => {
@@ -82,37 +82,36 @@ const chars = ["X", "O"];
 
 const verifyWhatReceivedAndSentProperResponse = (currentClient, data) => {
   if (data.messageType === messageTypes.ClientSaysLastMove) {
-    receivedLastMovedOfOpponent(currentClient, data.data); // 6 data.data = {positionX: 2, positionY: 2, whatClicked: 'X'}
+    receivedLastMovedOfOpponent(currentClient, data.data);
     return;
   }
 };
 
 const receivedLastMovedOfOpponent = (currentClient, messageData) => {
   console.log(messageData);
-  const x = messageData.positionX; // 2
-  const y = messageData.positionY; // 2
-  const whatClicked = messageData.whatClicked; // undefined messageData.clickedChar X messageData.whatClicked
+  const x = messageData.positionX;
+  const y = messageData.positionY;
+  const whatClicked = messageData.whatClicked;
 
   if (!validateMove(whatClicked, currentClient.char)) {
-    // 7
     return;
   }
 
-  updateBoardState(x, y, whatClicked); // 8
+  updateBoardState(x, y, whatClicked);
   if (verifyEndGame()) {
     endGame(currentClient);
     return;
   }
   sendToOpponent(currentClient, {
-    messageType: messageTypes.ServerSaysUpdatedBoard, // 4
-    data: boardState, // aktualna tablica
-  }); // 9
-  previouslyClickecChar = whatClicked; // X
+    messageType: messageTypes.ServerSaysUpdatedBoard,
+    data: boardState,
+  });
+  previouslyClickecChar = whatClicked;
 };
 
 const validateMove = (whatClicked, currentClientChar) => {
-  console.log(whatClicked); // undefined
-  console.log(currentClientChar); // X
+  console.log(whatClicked);
+  console.log(currentClientChar);
   if (
     previouslyClickecChar != undefined &&
     previouslyClickecChar === whatClicked
@@ -130,9 +129,9 @@ const validateMove = (whatClicked, currentClientChar) => {
 };
 
 const updateBoardState = (
-  receivedMoveXPosition, // 2
-  receivedMoveYPosition, // 2
-  receivedMoveChar // X
+  receivedMoveXPosition,
+  receivedMoveYPosition,
+  receivedMoveChar
 ) => {
   boardState[receivedMoveXPosition][receivedMoveYPosition] = receivedMoveChar;
 };
@@ -172,6 +171,6 @@ const sendToOpponent = (currentClient, data) => {
 
   if (targetClient != undefined) {
     console.log("send to opponent");
-    targetClient.send(JSON.stringify(data)); // przesyłanie do drugiego klienta aktualny obiekt
+    targetClient.send(JSON.stringify(data));
   }
 };
