@@ -52,8 +52,6 @@ tdElements.forEach((td) =>
       char == lastPlacedChar
     ) {
       return;
-    } else {
-      ev.target.innerText = char;
     }
 
     ws.send(JSON.stringify(position));
