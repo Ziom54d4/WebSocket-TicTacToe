@@ -3,7 +3,7 @@ const table = document.querySelector("table");
 const tdElements = [...document.querySelectorAll("td")];
 
 let char = undefined;
-let charFromTheBoard = undefined;
+let lastPlacedChar = undefined;
 let ws = undefined;
 
 btnPlay.addEventListener("click", () => {
@@ -18,23 +18,16 @@ btnPlay.addEventListener("click", () => {
     if (parsedData.messageType == messageTypes.ServerSaysAssignPlayerChar) {
       char = parsedData.data.char;
     } else if (parsedData.messageType == messageTypes.ServerSaysUpdatedBoard) {
-      boardState = parsedData.data;
-      console.log(boardState);
-      for (let i = 0; i < boardState.length; i++) {
-        for (let j = 0; j < boardState[0].length; j++) {
-          if (boardState[i][j] != undefined) {
-            charFromTheBoard = boardState[i][j];
-            tdElements.forEach((td) => {
-              if (
-                td.getAttribute("data-x") == j &&
-                td.getAttribute("data-y") == i
-              ) {
-                td.innerText = charFromTheBoard; // przechodzi po całej tablicy przeciwnika i podstawia zebrane znaki
-              }
-            });
-          }
+      lastPlacedChar = parsedData.data.whatClicked;
+      let x = parsedData.data.x; // wiersze
+      let y = parsedData.data.y; // kolumny
+      boardState[x][y] = lastPlacedChar;
+      tdElements.forEach((td) => {
+        if (td.getAttribute("data-x") == y && td.getAttribute("data-y") == x) {
+          td.innerText = lastPlacedChar;
         }
-      }
+      });
+      console.log(boardState);
     }
   });
 });
@@ -53,7 +46,15 @@ tdElements.forEach((td) =>
       },
     };
 
-    ev.target.innerText = char;
+    if (
+      ev.target.innerText == "X" ||
+      ev.target.innerText == "O" ||
+      char == lastPlacedChar
+    ) {
+      return;
+    } else {
+      ev.target.innerText = char;
+    }
 
     ws.send(JSON.stringify(position));
   })

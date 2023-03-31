@@ -47,3 +47,36 @@ validateMove zwróci false w przypadku "złego kodu" (whatClicked = undefined)
 
 
 currentClient.send(JSON.stringify(boardState));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /*
+      boardState = parsedData.data;
+      for (let i = 0; i < boardState.length; i++) {
+        for (let j = 0; j < boardState[0].length; j++) {
+          if (boardState[i][j] != undefined) {
+            charFromTheBoard = boardState[i][j];
+            tdElements.forEach((td) => {
+              if (
+                td.getAttribute("data-x") == j &&
+                td.getAttribute("data-y") == i
+              ) {
+                td.innerText = charFromTheBoard; // przechodzi po całej tablicy przeciwnika i podstawia zebrane znaki
+              }
+            });
+          }
+        }
+      }
+      */
