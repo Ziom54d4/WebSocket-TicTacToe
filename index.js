@@ -19,8 +19,8 @@ btnPlay.addEventListener("click", () => {
       char = parsedData.data.char;
     } else if (parsedData.messageType == messageTypes.ServerSaysUpdatedBoard) {
       lastPlacedChar = parsedData.data.whatClicked;
-      let x = parsedData.data.x; // wiersze
-      let y = parsedData.data.y; // kolumny
+      let x = parsedData.data.x; // rows
+      let y = parsedData.data.y; // columns
       boardState[x][y] = lastPlacedChar;
       tdElements.forEach((td) => {
         if (td.getAttribute("data-x") == y && td.getAttribute("data-y") == x) {
@@ -53,6 +53,10 @@ tdElements.forEach((td) =>
     ) {
       return;
     }
+
+    ev.target.innerText = char;
+    lastPlacedChar = char;
+    boardState[positionX][positionY] = lastPlacedChar;
 
     ws.send(JSON.stringify(position));
   })
