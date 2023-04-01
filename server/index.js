@@ -102,10 +102,7 @@ const receivedLastMovedOfOpponent = (currentClient, messageData) => {
     endGame(currentClient);
     return;
   }
-  sendToSender(currentClient, {
-    messageType: messageTypes.ServerSaysUpdatedBoard,
-    data: { whatClicked, x, y },
-  }); // sendToSender dodałem
+
   sendToOpponent(currentClient, {
     messageType: messageTypes.ServerSaysUpdatedBoard,
     data: { whatClicked, x, y }, // boardState
