@@ -46,6 +46,8 @@ tdElements.forEach((td) =>
       },
     };
 
+    console.log(lastPlacedChar);
+
     if (
       ev.target.innerText == "X" ||
       ev.target.innerText == "O" ||
@@ -53,7 +55,8 @@ tdElements.forEach((td) =>
     ) {
       return;
     }
-
+    lastPlacedChar = char;
+    ev.target.innerText = char;
     ws.send(JSON.stringify(position));
   })
 );
