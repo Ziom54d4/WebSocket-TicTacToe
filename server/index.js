@@ -99,7 +99,7 @@ const receivedLastMovedOfOpponent = (currentClient, messageData) => {
 
   updateBoardState(x, y, whatClicked);
   if (verifyEndGame()) {
-    endGame(currentClient);
+    endGame(currentClient, x, y, whatClicked); // whatClicked
     return;
   }
 
@@ -135,25 +135,83 @@ const updateBoardState = (
   receivedMoveChar
 ) => {
   boardState[receivedMoveXPosition][receivedMoveYPosition] = receivedMoveChar;
+  console.log(boardState);
 };
 
 const verifyEndGame = () => {
+  if (
+    (boardState[0][0] == "X" &&
+      boardState[1][1] == "X" &&
+      boardState[2][2] == "X") ||
+    (boardState[0][0] == "O" &&
+      boardState[1][1] == "O" &&
+      boardState[2][2] == "O")
+  ) {
+    return true;
+  } // skos od lewej do prawej
+
+  if (
+    (boardState[0][2] == "X" &&
+      boardState[1][1] == "X" &&
+      boardState[2][0] == "X") ||
+    (boardState[0][2] == "O" &&
+      boardState[1][1] == "O" &&
+      boardState[2][0] == "O")
+  ) {
+    return true;
+  } // skos od prawej do lewej
+
+  for (let i = 0; i < boardState.length; i++) {
+    if (
+      (boardState[i][0] == "X" &&
+        boardState[i][1] == "X" &&
+        boardState[i][2] == "X") ||
+      (boardState[i][0] == "O" &&
+        boardState[i][1] == "O" &&
+        boardState[i][2] == "O")
+    ) {
+      return true;
+    } // dla wierszy
+
+    if (
+      (boardState[0][i] == "X" &&
+        boardState[1][i] == "X" &&
+        boardState[2][i] == "X") ||
+      (boardState[0][i] == "O" &&
+        boardState[1][i] == "O" &&
+        boardState[2][i] == "O")
+    ) {
+      return true;
+    } // dla kolumn
+  }
+
   return false;
 };
 
-const endGame = (currentClient, opponentX, opponentY) => {
+const endGame = (currentClient, opponentX, opponentY, whatClicked) => {
+  // whatClicked
   clearBoardsState();
   previouslyClickecChar = undefined;
+  let x = opponentX;
+  let y = opponentY;
   sendToSender(currentClient, {
     messageType: messageTypes.ServerSaysWin,
+  });
+  // sendToOpponent (ten pierwszy na dole - pod spodem jest mój)
+  sendToOpponent(currentClient, {
+    messageType: messageTypes.ServerSaysUpdatedBoard,
+    data: { whatClicked, x, y },
   });
   sendToOpponent(currentClient, {
     messageType: messageTypes.ServerSaysGameOver,
     data: { positionX: opponentX, positionY: opponentY },
   });
+
+  /*
   wss.clients.forEach((client) => {
     client.terminate();
   });
+  */ // nie mój kod
 };
 
 const clearBoardsState = () => {

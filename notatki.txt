@@ -80,3 +80,238 @@ currentClient.send(JSON.stringify(boardState));
         }
       }
       */
+
+
+Koniec gry! Przegrałeś... Zwycięzca: X
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+}
+
+.btnPlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    border: 2px solid black;
+    background-color: transparent;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+table {
+    width: 225px;
+    height: 225px;
+    max-width: 225px;
+    max-height: 225px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-collapse: collapse;
+    display: none;
+}
+
+td {
+    display: inline-block;
+    width: 75px;
+    height: 75px;
+    max-width: 75px;
+    max-height: 75px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.infoAboutWinner {
+    background-color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      /*
+      lastClickedChar = parsedData.data.previouslyClickecChar;
+      let lastPositionRow = parsedData.data.positionX;
+      let lastPositionCol = parsedData.data.positionY;
+      boardState[lastPositionRow][lastPositionCol] = lastClickedChar;
+      tdElements.forEach((td) => {
+        if (
+          td.getAttribute("data-x") == lastPositionCol &&
+          td.getAttribute("data-y") == lastPositionRow
+        ) {
+          td.innerText = lastClickedChar;
+        }
+      });
+      */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    let counterRows = 0;
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        for (let k = 0; k < 3; k++) {
+          if (k == 0 && j == 1 && i == 2) {
+            if (
+              (counterRows == 0 &&
+                boardState[counterRows][k] == "X" &&
+                boardState[counterRows][j] == "X" &&
+                boardState[counterRows][i] == "X") ||
+              (counterRows == 0 &&
+                boardState[counterRows][k] == "O" &&
+                boardState[counterRows][j] == "O" &&
+                boardState[counterRows][i] == "O")
+            ) {
+              return;
+            }
+            if (
+              (counterRows == 1 &&
+                boardState[counterRows][k] == "X" &&
+                boardState[counterRows][j] == "X" &&
+                boardState[counterRows][i] == "X") ||
+              (counterRows == 1 &&
+                boardState[counterRows][k] == "O" &&
+                boardState[counterRows][j] == "O" &&
+                boardState[counterRows][i] == "O")
+            ) {
+              return;
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Stworzyć funkcje opisującą znak na liczbę:
+- niech "x" będzie 1
+- niech "o" będzie 2
+
+Później poprzez sprawdzanie jak na dole:
+
+for(var i = 0; i < 3; i++)
+    {
+        //Sprawdzam w poziomie
+        if(Math.abs(tablica[0][i] + tablica[1][i] + tablica[2][i]) == 3)
+            return tablica[0][i];
+        //Sprawdzam w pionie
+        if(Math.abs(tablica[i][0] + tablica[i][1] + tablica[i][2]) == 3)
+            return tablica[i][0];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if(boardState[0][0] == "X" && boardState[1][1] == "X" && boardState[2][2] == "X" || boardState[0][0] == "O" && boardState[1][1] == "O" && boardState[2][2] == "O") {
+	return true;
+}
+
+if(boardState[0][2] == "X" && boardState[1][1] == "X" && boardState[2][0] == "X" || boardState[0][2] == "O" && boardState[1][1] == "O" && boardState[2][0] == "O") {
+	return true;
+}
+
+for(let i=0; i<boardState.length; i++) {
+	if(boardState[i][0] == "X" && boardState[i][1] == "X" && boardState[i][2] == "X" || boardState[i][0] == "O" && boardState[i][1] == "O" && boardState[i][2] == "O") {
+    return true;
+	} // dla wierszy
+
+	if(boardState[0][i] == "X" && boardState[1][i] == "X" && boardState[2][i] == "X" || boardState[0][i] == "O" && boardState[1][i] == "O" && boardState[2][i] == "O") {
+    return true;
+	} // dla kolumn
+}
