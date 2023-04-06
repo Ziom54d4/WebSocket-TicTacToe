@@ -43,10 +43,34 @@ td {
     text-align: center;
 }
 
+.leftGame {
+    display: none;
+    width: 200px;
+    margin: 20px auto 0 auto;
+    padding: 15px 20px 15px 20px;
+    letter-spacing: 2px;
+    color: dodgerblue;
+    text-transform: uppercase;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border: 2px dashed blue;
+    text-align: center;
+}
+
 .endGame {
     display: none;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
+}
+
+.playAgain {
+    display: none;
+    width: 200px;
+    margin: 20px auto 0 auto;
+    padding: 15px 20px 15px 20px;
+    letter-spacing: 2px;
+    color: tomato;
+    border: 2px dashed cornflowerblue;
+    text-align: center;
 }
 
 @media (orientation: landscape) and (min-height: 280px) and (max-height: 414px) {

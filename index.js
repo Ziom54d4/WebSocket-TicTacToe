@@ -3,6 +3,8 @@ const table = document.querySelector("table");
 const tdElements = [...document.querySelectorAll("td")];
 const elementEndGame = document.querySelector(".endGame");
 const elementWinnerOrLoser = document.querySelector(".winnerOrLoser");
+const elementPlayAgain = document.querySelector(".playAgain");
+const elementLeftGame = document.querySelector(".leftGame");
 
 let char = undefined;
 let lastPlacedChar = undefined;
@@ -30,6 +32,7 @@ btnPlay.addEventListener("click", () => {
 
   btnPlay.style.display = "none";
   table.style.display = "block";
+  elementLeftGame.style.display = "block";
 
   ws.addEventListener("message", (data) => {
     const parsedData = JSON.parse(data.data);
@@ -48,11 +51,15 @@ btnPlay.addEventListener("click", () => {
       });
       console.log(boardState);
     } else if (parsedData.messageType == messageTypes.ServerSaysWin) {
+      elementLeftGame.style.display = "none";
+      elementPlayAgain.style.display = "block";
       elementWinnerOrLoser.innerText = ` Zwycięzca: `;
       elementWinnerOrLoser.style.color = "green";
       elementEndGame.innerHTML += char;
       elementEndGame.style.display = "block";
     } else if (parsedData.messageType == messageTypes.ServerSaysGameOver) {
+      elementLeftGame.style.display = "none";
+      elementPlayAgain.style.display = "block";
       gameOver = true; // tu
       elementWinnerOrLoser.innerText = ` Przegrany: `;
       elementWinnerOrLoser.style.color = "red";
@@ -91,4 +98,12 @@ tdElements.forEach((td) => {
 
     ws.send(JSON.stringify(position));
   });
+});
+
+elementLeftGame.addEventListener("click", () => {
+  location.reload();
+});
+
+elementPlayAgain.addEventListener("click", () => {
+  location.reload();
 });
